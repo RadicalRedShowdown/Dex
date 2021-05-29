@@ -29,7 +29,6 @@ var PokedexMovePanel = PokedexResultPanel.extend({
 				} else {
 					buf += 'This move can\'t be learned normally.';
 				}
-				buf += '.';
 				break;
 			case 'CAP':
 				buf += 'This is a made-up move by <a href="http://www.smogon.com/cap/" target="_blank">Smogon CAP</a>.';
@@ -126,6 +125,15 @@ var PokedexMovePanel = PokedexResultPanel.extend({
 		}
 		if ('bullet' in move.flags) {
 			buf += '<p class="movetag"><a href="/tags/ballistic" data-target="push">&#x2713; Ballistic</a> <small>(doesn\'t affect <a class="subtle" href="/abilities/bulletproof" data-target="push">Bulletproof</a> pokemon)</small></p>';
+		}
+		if ('kick' in move.flags) {
+			buf += '<p class="movetag"><a href="/tags/bite" data-target="push">&#x2713; Kick</a> <small>(boosted by <a class="subtle" href="/abilities/strikes" data-target="push">Striker</a>)</small></p>';
+		}
+		if ('blade' in move.flags) {
+			buf += '<p class="movetag"><a href="/tags/bite" data-target="push">&#x2713; Blade</a> <small>(boosted by <a class="subtle" href="/abilities/blademaster" data-target="push">Blademaster</a>)</small></p>';
+		}
+		if ('bone' in move.flags) {
+			buf += '<p class="movetag"><a href="/tags/bite" data-target="push">&#x2713; Bone</a> <small>(affected by <a class="subtle" href="/abilities/bonezone" data-target="push">Bone Zone</a>)</small></p>';
 		}
 
 		if (move.target === 'allAdjacent') {
@@ -377,59 +385,57 @@ var PokedexMovePanel = PokedexResultPanel.extend({
 		}
 
 		// past gens
-		var pastGenChanges = false;
-		var curGenDesc = move.shortDesc;
-		if (BattleTeambuilderTable) for (var genNum = 7; genNum >= 1; genNum--) {
-			var genTable = BattleTeambuilderTable['gen' + genNum];
-			var nextGenTable = BattleTeambuilderTable['gen' + (genNum + 1)];
+		var rrChanges = false;
+		if (BattleTeambuilderTable['gen8old']) {
+			var table = BattleTeambuilderTable['gen8old'];
 			var changes = '';
 
-			var nextGenType = nextGenTable?.overrideMoveData[id]?.type || move.type;
-			var curGenType = genTable?.overrideMoveData[id]?.type || nextGenType;
-			if (curGenType !== nextGenType) {
-				changes += 'Type: ' + curGenType + ' <i class="fa fa-long-arrow-right"></i> ' + nextGenType + '<br />';
+			var rrType = move.type;
+			var gen8Type = table?.overrideMoveData[id]?.type || rrType;
+			if (gen8Type !== rrType) {
+				changes += 'Type: ' + gen8Type + ' <i class="fa fa-long-arrow-right"></i> ' + rrType + '<br />';
 			}
 
-			var nextGenBP = nextGenTable?.overrideMoveData[id]?.basePower || move.basePower;
-			var curGenBP = genTable?.overrideMoveData[id]?.basePower || nextGenBP;
-			if (curGenBP !== nextGenBP) {
-				changes += 'Base power: ' + curGenBP + ' <i class="fa fa-long-arrow-right"></i> ' + nextGenBP + '<br />';
+			var rrBP = move.basePower;
+			var gen8BP = table?.overrideMoveData[id]?.basePower || rrBP;
+			if (gen8BP !== rrBP) {
+				changes += 'Base power: ' + gen8BP + ' <i class="fa fa-long-arrow-right"></i> ' + rrBP + '<br />';
 			}
 
-			var nextGenPP = nextGenTable?.overrideMoveData[id]?.pp || move.pp;
-			var curGenPP = genTable?.overrideMoveData[id]?.pp || nextGenPP;
-			if (curGenPP !== nextGenPP) {
-				changes += 'PP: ' + curGenPP + ' <i class="fa fa-long-arrow-right"></i> ' + nextGenPP + '<br />';
+			var rrPP = move.pp;
+			var gen8PP = table?.overrideMoveData[id]?.pp || rrPP;
+			if (gen8PP !== rrPP) {
+				changes += 'PP: ' + gen8PP + ' <i class="fa fa-long-arrow-right"></i> ' + rrPP + '<br />';
 			}
 
-			var nextGenAcc = nextGenTable?.overrideMoveData[id]?.accuracy || move.accuracy;
-			var curGenAcc = genTable?.overrideMoveData[id]?.accuracy || nextGenAcc;
-			if (curGenAcc !== nextGenAcc) {
-				var curGenAccText = (curGenAcc === true ? 'nevermiss' : curGenAcc + '%');
-				var nextGenAccText = (nextGenAcc === true ? 'nevermiss' : nextGenAcc + '%');
-				changes += 'Accuracy: ' + curGenAccText + ' <i class="fa fa-long-arrow-right"></i> ' + nextGenAccText + '<br />';
+			var rrAcc = move.accuracy;
+			var gen8Acc = table?.overrideMoveData[id]?.accuracy || rrAcc;
+			if (gen8Acc !== rrAcc) {
+				var gen8AccText = (gen8Acc === true ? 'nevermiss' : gen8Acc + '%');
+				var rrAccText = (rrAcc === true ? 'nevermiss' : rrAcc + '%');
+				changes += 'Accuracy: ' + gen8AccText + ' <i class="fa fa-long-arrow-right"></i> ' + rrAccText + '<br />';
 			}
 
-			var nextGenCat = nextGenTable?.overrideMoveData[id]?.category || move.category;
-			var curGenCat = genTable?.overrideMoveData[id]?.category || nextGenCat;
-			if (curGenCat !== nextGenCat) {
-				changes += curGenCat + ' <i class="fa fa-long-arrow-right"></i> ' + nextGenCat + '<br />';
+			var rrCat = move.category;
+			var gen8Cat = table?.overrideMoveData[id]?.category || rrCat;
+			if (gen8Cat !== rrCat) {
+				changes += gen8Cat + ' <i class="fa fa-long-arrow-right"></i> ' + rrCat + '<br />';
 			}
 
-			var nextGenDesc = curGenDesc;
-			curGenDesc = genTable?.overrideMoveData[id]?.shortDesc || nextGenDesc;
-			if (curGenDesc !== nextGenDesc) {
-				changes += curGenDesc + ' <i class="fa fa-long-arrow-right"></i> ' + nextGenDesc + '<br />';
+			var rrDesc = move.shortDesc;
+			var gen8Desc = table?.overrideMoveData[id]?.shortDesc || rrDesc;
+			if (gen8Desc !== rrDesc) {
+				changes += gen8Desc + ' <i class="fa fa-long-arrow-right"></i> ' + rrDesc + '<br />';
 			}
 
 			if (changes) {
-				if (!pastGenChanges) buf += '<h3>Past gens</h3><dl>';
-				buf += '<dt>Gen ' + genNum + ' <i class="fa fa-arrow-right"></i> ' + (genNum + 1) + ':</dt>';
+				if (!rrChanges) buf += '<h3>Changes from Gen 8</h3><dl>';
+				buf += '<dt>Gen 8 <i class="fa fa-arrow-right"></i> RR:</dt>';
 				buf += '<dd>' + changes + '</dd>';
-				pastGenChanges = true;
+				rrChanges = true;
 			}
 		}
-		if (pastGenChanges) buf += '</dl>';
+		if (rrChanges) buf += '</dl>';
 
 		// distribution
 		buf += '<ul class="utilichart metricchart nokbd">';
