@@ -69,7 +69,7 @@ var PokedexPokemonPanel = PokedexResultPanel.extend({
 			if (i !== '0') buf += ' | ';
 			if (i === 'H') ability = '<em>'+pokemon.abilities[i]+'</em>';
 			buf += '<a href="/abilities/'+toID(pokemon.abilities[i])+'" data-target="push">'+ability+'</a>';
-			if (i === 'H') buf += '<small> (H)</small>';
+			if (i === 'H') buf += '<small> (HA)</small>';
 			if (i === 'S') buf += '<small> (special)</small>';
 		}
 		buf += '</dd>';
@@ -208,28 +208,38 @@ var PokedexPokemonPanel = PokedexResultPanel.extend({
 		// past gens
 		var rrChanges = false;
 		if (BattleTeambuilderTable['gen8old']) {
-			var table = BattleTeambuilderTable['gen8old'];
+			const table = BattleTeambuilderTable['gen8old'];
 			var changes = '';
 
-			var rrTypes = pokemon.types.join('/');
-			var gen8Types = table?.overrideSpeciesData[id]?.types?.join('/') || rrTypes;
+			const rrTypes = pokemon.types.join('/');
+			const gen8Types = table?.overrideSpeciesData[id]?.types?.join('/') || rrTypes;
 			if (gen8Types !== rrTypes) {
 				changes += 'Type: ' + gen8Types + ' <i class="fa fa-long-arrow-right"></i> ' + rrTypes + '<br />';
 			}
 
-			var rrAbilities = Object.values(pokemon.abilities);
-			var gen8Abilities = table?.overrideSpeciesData[id]?.abilities ? Object.values(table.overrideSpeciesData[id].abilities) : rrAbilities;
-			for (var i = 0; i < Math.max(rrAbilities.length, gen8Abilities.length); i++) {
-				const rrAbility = rrAbilities[i] || 'None';
-				const gen8Abiity = gen8Abilities[i] || 'None';
+			const rrAbilities = pokemon.abilities;
+			const gen8Abilities = table?.overrideSpeciesData[id]?.abilities || rrAbilities;
+			const abilityKeys = ['0', '1', 'H'];
+			for (const key of abilityKeys) {
+				const rrAbility = rrAbilities[key] || 'None';
+				const gen8Abiity = gen8Abilities[key] || 'None';
+				const abilityText = (() => {
+					if (key === '0' || key === '1') {
+						return `Ability ${Number(key) + 1}`
+					} else if (key === 'H') {
+						return 'Hidden Ability'
+					} else {
+						return 'Ability'
+					}
+				})();
 				if (gen8Abiity !== rrAbility) {
-					changes += 'Ability: ' + gen8Abiity + ' <i class="fa fa-long-arrow-right"></i> ' + rrAbility + '<br />';
+					changes += `${abilityText}: ${gen8Abiity} <i class="fa fa-long-arrow-right"></i> ${rrAbility}<br />`;
 				}
 			}
 
-			for (var i in BattleStatNames) {
-				var rrStat = pokemon.baseStats[i];
-				var gen8Stat = table?.overrideSpeciesData[id]?.baseStats?.[i] || rrStat;
+			for (const i in BattleStatNames) {
+				const rrStat = pokemon.baseStats[i];
+				const gen8Stat = table?.overrideSpeciesData[id]?.baseStats?.[i] || rrStat;
 				if (gen8Stat !== rrStat) {
 					changes += BattleStatNames[i] + ': ' + gen8Stat + ' <i class="fa fa-long-arrow-right"></i> ' + rrStat + '<br />';
 				}
