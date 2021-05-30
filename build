@@ -13,7 +13,7 @@ const Config = require('./config/config');
 process.chdir(__dirname);
 
 if (process.argv[2] === 'full') {
-	child_process.execSync('../play.pokemonshowdown.com/build-tools/build-indexes', {stdio: 'inherit'});
+	child_process.execSync('../pokemon-showdown-client/build-tools/build-indexes', {stdio: 'inherit'});
 }
 
 function updateFiles() {
@@ -27,7 +27,7 @@ function updateFiles() {
 			var filepath = c;
 			if (c.includes('/play.pokemonshowdown.com/')) {
 				const filename = c.replace('/play.pokemonshowdown.com/', '');
-				filepath = '../play.pokemonshowdown.com/' + filename;
+				filepath = '../pokemon-showdown-client/' + filename;
 			}
 			const fstr = fs.readFileSync(filepath, {encoding: 'utf8'});
 			hash = crypto.createHash('md5').update(fstr).digest('hex').substr(0, 8);
