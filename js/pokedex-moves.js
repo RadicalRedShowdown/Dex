@@ -451,8 +451,14 @@ var PokedexMovePanel = PokedexResultPanel.extend({
 		var moveid = this.id;
 		if (this.results) return this.results;
 		var results = [];
-		for (var pokemonid in BattleLearnsets) {
-			if (BattlePokedex[pokemonid].isNonstandard || !BattleLearnsets[pokemonid].learnset) continue;
+		for (var pokemonid in BattlePokedex) {
+			if (
+				BattlePokedex[pokemonid].isNonstandard || 
+				!BattleLearnsets[pokemonid] ||
+				!BattleLearnsets[pokemonid].learnset
+			) {
+				continue;
+			}
 			var sources = BattleLearnsets[pokemonid].learnset[moveid];
 			if (!sources) continue;
 			if (typeof sources === 'string') sources = [sources];
@@ -526,28 +532,22 @@ var PokedexMovePanel = PokedexResultPanel.extend({
 	},
 	renderRow: function(i, offscreen) {
 		var results = this.results;
-		var id = results[i].substr(5);
+		var id = results[i].split(' ')[1];
 		var template = id ? BattlePokedex[id] : undefined;
 		if (!template) {
 			switch (results[i].charAt(0)) {
 			case 'A': // level-up move
 				return '<h3>Level-up</h3>';
-				break;
 			case 'B': // tm/hm
 				return '<h3>TM/HM</h3>';
-				break;
 			case 'C': // tutor
 				return '<h3>Tutor</h3>';
-				break;
 			case 'D': // egg move
 				return '<h3>Egg</h3>';
-				break;
 			case 'E': // event
 				return '<h3>Event</h3>';
-				break;
 			case 'F': // past gen
 				return '<h3>Past generation only</h3>';
-				break;
 			}
 			return '<pre>error: "'+results[i]+'"</pre>';
 		} else if (offscreen) {
@@ -556,7 +556,8 @@ var PokedexMovePanel = PokedexResultPanel.extend({
 			var desc = '';
 			switch (results[i].charAt(0)) {
 			case 'a': // level-up move
-				desc = results[i].substr(1,3) === '001' ? '&ndash;' : '<small>L</small>'+(Number(results[i].substr(1,3)) || '?');
+				const level = results[i].split(' ')[0].slice(1);
+				desc = level === '1' ? '&ndash;' : '<small>L</small>'+(Number(level) || '?');
 				break;
 			case 'b': // tm/hm
 				desc = '<span class="itemicon" style="margin-top:-3px;'+Dex.getItemIcon({spritenum:508})+'"></span>';
