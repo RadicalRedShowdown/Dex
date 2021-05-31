@@ -1,4 +1,5 @@
 BattleSearch.urlRoot = '/';
+var search = new BattleSearch();
 
 Dex.escapeHTML = function (str, jsEscapeToo) {
 	str = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -35,27 +36,25 @@ var PokedexItemPanel = PokedexResultPanel.extend({
 		buf += '<p>'+Dex.escapeHTML(item.desc||item.shortDesc)+'</p>';
 
 		// past gens
-		var pastGenChanges = false;
-		if (BattleTeambuilderTable) for (var genNum = 7; genNum >= 1; genNum--) {
-			var genTable = BattleTeambuilderTable['gen' + genNum];
-			var nextGenTable = BattleTeambuilderTable['gen' + (genNum + 1)];
+		var rrChanges = false;
+		if (BattleTeambuilderTable['gen8old']) {
+			var table = BattleTeambuilderTable['gen8old'];
 			var changes = '';
 
-			var nextGenDesc = (item.shortDesc || item.desc);
-			if (nextGenTable && nextGenTable.overrideItemDesc[id]) nextGenDesc = nextGenTable.overrideItemDesc[id];
-			var curGenDesc = genTable.overrideItemDesc[id] || nextGenDesc;
-			if (curGenDesc !== nextGenDesc) {
-				changes += curGenDesc + ' <i class="fa fa-long-arrow-right"></i> ' + nextGenDesc + '<br />';
+			var rrDesc = item.shortDesc || item.desc;
+			var gen8Desc = table.overrideItemDesc[id] || rrDesc;
+			if (gen8Desc !== rrDesc) {
+				changes += gen8Desc + ' <i class="fa fa-long-arrow-right"></i> ' + rrDesc + '<br />';
 			}
 
 			if (changes) {
-				if (!pastGenChanges) buf += '<h3>Past gens</h3><dl>';
-				buf += '<dt>Gen ' + genNum + ' <i class="fa fa-arrow-right"></i> ' + (genNum + 1) + ':</dt>';
+				if (!rrChanges) buf += '<h3>Changes from Gen 8</h3><dl>';
+				buf += '<dt>Gen 8 <i class="fa fa-arrow-right"></i> RR:</dt>';
 				buf += '<dd>' + changes + '</dd>';
-				pastGenChanges = true;
+				rrChanges = true;
 			}
 		}
-		if (pastGenChanges) buf += '</dl>';
+		if (rrChanges) buf += '</dl>';
 
 		buf += '</div>';
 
@@ -78,27 +77,25 @@ var PokedexAbilityPanel = PokedexResultPanel.extend({
 		buf += '<p>'+Dex.escapeHTML(ability.desc)+'</p>';
 
 		// past gens
-		var pastGenChanges = false;
-		if (BattleTeambuilderTable) for (var genNum = 7; genNum >= 1; genNum--) {
-			var genTable = BattleTeambuilderTable['gen' + genNum];
-			var nextGenTable = BattleTeambuilderTable['gen' + (genNum + 1)];
+		var rrChanges = false;
+		if (BattleTeambuilderTable['gen8old']) {
+			var table = BattleTeambuilderTable['gen8old'];
 			var changes = '';
 
-			var nextGenDesc = (ability.shortDesc || ability.desc);
-			if (nextGenTable && nextGenTable.overrideAbilityDesc[id]) nextGenDesc = nextGenTable.overrideAbilityDesc[id];
-			var curGenDesc = genTable.overrideAbilityDesc[id] || nextGenDesc;
-			if (curGenDesc !== nextGenDesc) {
-				changes += curGenDesc + ' <i class="fa fa-long-arrow-right"></i> ' + nextGenDesc + '<br />';
+			var rrDesc = ability.shortDesc || ability.desc;
+			var gen8Desc = table.overrideAbilityDesc[id] || rrDesc;
+			if (gen8Desc !== rrDesc) {
+				changes += gen8Desc + ' <i class="fa fa-long-arrow-right"></i> ' + rrDesc + '<br />';
 			}
 
 			if (changes) {
-				if (!pastGenChanges) buf += '<h3>Past gens</h3><dl>';
-				buf += '<dt>Gen ' + genNum + ' <i class="fa fa-arrow-right"></i> ' + (genNum + 1) + ':</dt>';
+				if (!rrChanges) buf += '<h3>Changes from Gen 8</h3><dl>';
+				buf += '<dt>Gen 8 <i class="fa fa-arrow-right"></i> RR:</dt>';
 				buf += '<dd>' + changes + '</dd>';
-				pastGenChanges = true;
+				rrChanges = true;
 			}
 		}
-		if (pastGenChanges) buf += '</dl>';
+		if (rrChanges) buf += '</dl>';
 
 		// pokemon
 		buf += '<h3>Pok&eacute;mon with this ability</h3>';
@@ -118,7 +115,7 @@ var PokedexAbilityPanel = PokedexResultPanel.extend({
 			var template = BattlePokedex[pokemonid];
 			if (template.isNonstandard && !ability.isNonstandard) continue;
 			if (template.abilities['0'] === ability.name || template.abilities['1'] === ability.name || template.abilities['H'] === ability.name) {
-				buf += BattleSearch.renderPokemonRow(template);
+				buf += search.renderPokemonRow(template);
 			}
 		}
 		this.$('.utilichart').html(buf);
@@ -240,7 +237,7 @@ var PokedexTypePanel = PokedexResultPanel.extend({
 		for (var moveid in BattleMovedex) {
 			var move = BattleMovedex[moveid];
 			if (move.type === type && move.category === 'Physical') {
-				buf += BattleSearch.renderMoveRow(move);
+				buf += search.renderMoveRow(move);
 			}
 		}
 		this.$('.utilichart').html(buf)
@@ -255,7 +252,7 @@ var PokedexTypePanel = PokedexResultPanel.extend({
 		for (var moveid in BattleMovedex) {
 			var move = BattleMovedex[moveid];
 			if (move.type === type) {
-				bufs[bufChart[move.category]] += BattleSearch.renderMoveRow(move);
+				bufs[bufChart[move.category]] += search.renderMoveRow(move);
 			}
 		}
 		this.$('.utilichart').html(bufs.join(''))
@@ -267,7 +264,7 @@ var PokedexTypePanel = PokedexResultPanel.extend({
 		for (var templateid in BattlePokedex) {
 			var template = BattlePokedex[templateid];
 			if (template.types[0] === type && !template.types[1]) {
-				pureBuf += BattleSearch.renderPokemonRow(template);
+				pureBuf += search.renderPokemonRow(template);
 			}
 		}
 		this.$('.utilichart').html(pureBuf)
@@ -283,10 +280,10 @@ var PokedexTypePanel = PokedexResultPanel.extend({
 			var template = BattlePokedex[templateid];
 			if (template.types[0] === type) {
 				if (template.types[1]) {
-					primaryBuf += BattleSearch.renderPokemonRow(template);
+					primaryBuf += search.renderPokemonRow(template);
 				}
 			} else if (template.types[1] === type) {
-				secondaryBuf += BattleSearch.renderPokemonRow(template);
+				secondaryBuf += search.renderPokemonRow(template);
 			}
 		}
 		this.$('.utilichart').append(primaryBuf + secondaryBuf);
@@ -474,7 +471,7 @@ var PokedexTagPanel = PokedexResultPanel.extend({
 		if (offscreen) {
 			return move.name;
 		} else {
-			return BattleSearch.renderMoveRowInner(move);
+			return search.renderMoveRowInner(move);
 		}
 	},
 	handleScroll: function() {
@@ -697,7 +694,7 @@ var PokedexEggGroupPanel = PokedexResultPanel.extend({
 		if (offscreen) {
 			return ''+template.species+' '+template.abilities['0']+' '+(template.abilities['1']||'')+' '+(template.abilities['H']||'')+'';
 		} else {
-			return BattleSearch.renderTaggedPokemonRowInner(template, '<span class="picon" style="margin-top:-12px;'+Dex.getPokemonIcon('egg')+'"></span>');
+			return search.renderTaggedPokemonRowInner(template, '<span class="picon" style="margin-top:-12px;'+Dex.getPokemonIcon('egg')+'"></span>');
 		}
 	},
 	handleScroll: function() {
@@ -846,7 +843,7 @@ var PokedexTierPanel = PokedexResultPanel.extend({
 		for (var pokemonid in BattlePokedex) {
 			var template = BattlePokedex[pokemonid];
 			if (template.tier === tierName || template.tier === tierName2) {
-				buf += BattleSearch.renderPokemonRow(template);
+				buf += search.renderPokemonRow(template);
 			}
 		}
 		this.$('.utilichart').html(buf);
