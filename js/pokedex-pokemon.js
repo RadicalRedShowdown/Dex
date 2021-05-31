@@ -532,7 +532,8 @@ var PokedexPokemonPanel = PokedexResultPanel.extend({
 					break;
 				case 'd': // tm/hm
 					if (lastChanged) buf += '<li class="resultheader"><h3>TM/HM</h3></li>';
-					desc = '<span class="itemicon" style="margin-top:-3px;'+Dex.getItemIcon({spritenum:508})+'"></span>';
+					const moveType = toID(BattleMovedex[moves[i].split(' ')[1]].type);
+					desc = '<span class="itemicon" style="margin-top:-3px;background:transparent url('+Dex.resourcePrefix+'sprites/itemicons/tm-'+moveType+'.png) no-repeat"></span>';
 					break;
 				case 'e': // tutor
 					if (lastChanged) buf += '<li class="resultheader"><h3>Tutor</h3></li>';

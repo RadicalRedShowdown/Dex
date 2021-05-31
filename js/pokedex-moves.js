@@ -560,10 +560,11 @@ var PokedexMovePanel = PokedexResultPanel.extend({
 				desc = level === '1' ? '&ndash;' : '<small>L</small>'+(Number(level) || '?');
 				break;
 			case 'b': // tm/hm
-				desc = '<span class="itemicon" style="margin-top:-3px;'+Dex.getItemIcon({spritenum:508})+'"></span>';
+				const moveType = toID(BattleMovedex[this.id].type);
+				desc = '<span class="itemicon" style="margin-top:-3px;background:transparent url('+Dex.resourcePrefix+'sprites/itemicons/tm-'+moveType+'.png) no-repeat"></span>';
 				break;
 			case 'c': // tutor
-				desc = '<img src="//' + Config.routes.client + '/sprites/tutor.png" style="margin-top:-4px;opacity:.7" width="27" height="26" alt="T" />';
+				desc = '<img src="' + Dex.resourcePrefix + 'sprites/tutor.png" style="margin-top:-4px;opacity:.7" width="27" height="26" alt="T" />';
 				break;
 			case 'd': // egg move
 				desc = '<span class="picon" style="margin-top:-12px;'+Dex.getPokemonIcon('egg')+'"></span>';
