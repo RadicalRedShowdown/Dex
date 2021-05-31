@@ -127,13 +127,13 @@ var PokedexMovePanel = PokedexResultPanel.extend({
 			buf += '<p class="movetag"><a href="/tags/ballistic" data-target="push">&#x2713; Ballistic</a> <small>(doesn\'t affect <a class="subtle" href="/abilities/bulletproof" data-target="push">Bulletproof</a> pokemon)</small></p>';
 		}
 		if ('kick' in move.flags) {
-			buf += '<p class="movetag"><a href="/tags/bite" data-target="push">&#x2713; Kick</a> <small>(boosted by <a class="subtle" href="/abilities/strikes" data-target="push">Striker</a>)</small></p>';
+			buf += '<p class="movetag"><a href="/tags/kick" data-target="push">&#x2713; Kick</a> <small>(boosted by <a class="subtle" href="/abilities/strikes" data-target="push">Striker</a>)</small></p>';
 		}
 		if ('blade' in move.flags) {
-			buf += '<p class="movetag"><a href="/tags/bite" data-target="push">&#x2713; Blade</a> <small>(boosted by <a class="subtle" href="/abilities/blademaster" data-target="push">Blademaster</a>)</small></p>';
+			buf += '<p class="movetag"><a href="/tags/blade" data-target="push">&#x2713; Blade</a> <small>(boosted by <a class="subtle" href="/abilities/blademaster" data-target="push">Blademaster</a>)</small></p>';
 		}
 		if ('bone' in move.flags) {
-			buf += '<p class="movetag"><a href="/tags/bite" data-target="push">&#x2713; Bone</a> <small>(affected by <a class="subtle" href="/abilities/bonezone" data-target="push">Bone Zone</a>)</small></p>';
+			buf += '<p class="movetag"><a href="/tags/bone" data-target="push">&#x2713; Bone</a> <small>(affected by <a class="subtle" href="/abilities/bonezone" data-target="push">Bone Zone</a>)</small></p>';
 		}
 
 		if (move.target === 'allAdjacent') {
