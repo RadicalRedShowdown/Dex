@@ -113,6 +113,7 @@ var PokedexAbilityPanel = PokedexResultPanel.extend({
 		var buf = '';
 		for (var pokemonid in BattlePokedex) {
 			var template = BattlePokedex[pokemonid];
+			template.id = pokemonid;
 			if (template.isNonstandard && !ability.isNonstandard) continue;
 			if (template.abilities['0'] === ability.name || template.abilities['1'] === ability.name || template.abilities['H'] === ability.name) {
 				buf += search.renderPokemonRow(template);
@@ -261,8 +262,9 @@ var PokedexTypePanel = PokedexResultPanel.extend({
 	renderPokemonList: function() {
 		var type = this.type;
 		var pureBuf = '<li class="resultheader"><h3>Pure '+type+' Pok&eacute;mon</h3></li>';
-		for (var templateid in BattlePokedex) {
-			var template = BattlePokedex[templateid];
+		for (var pokemonid in BattlePokedex) {
+			var template = BattlePokedex[pokemonid];
+			template.id = pokemonid;
 			if (template.types[0] === type && !template.types[1]) {
 				pureBuf += search.renderPokemonRow(template);
 			}
@@ -276,8 +278,9 @@ var PokedexTypePanel = PokedexResultPanel.extend({
 		var type = this.type;
 		var primaryBuf = '<li class="resultheader"><h3>Primary '+type+' Pok&eacute;mon</h3></li>';
 		var secondaryBuf = '<li class="resultheader"><h3>Secondary '+type+' Pok&eacute;mon</h3></li>';
-		for (var templateid in BattlePokedex) {
-			var template = BattlePokedex[templateid];
+		for (var pokemonid in BattlePokedex) {
+			var template = BattlePokedex[pokemonid];
+			template.id = pokemonid;
 			if (template.types[0] === type) {
 				if (template.types[1]) {
 					primaryBuf += search.renderPokemonRow(template);
@@ -842,6 +845,7 @@ var PokedexTierPanel = PokedexResultPanel.extend({
 		var buf = '';
 		for (var pokemonid in BattlePokedex) {
 			var template = BattlePokedex[pokemonid];
+			template.id = pokemonid;
 			if (template.tier === tierName || template.tier === tierName2) {
 				buf += search.renderPokemonRow(template);
 			}
