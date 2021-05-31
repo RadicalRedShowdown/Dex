@@ -343,7 +343,7 @@ var PokedexPokemonPanel = PokedexResultPanel.extend({
 		case 'other':
 			return evo.evoCondition;
 		default:
-			return 'level ' + evo.evoLevel;
+			return 'level ' + evo.evoLevel + condition;
 		}
 	},
 	selectTab: function(e) {
