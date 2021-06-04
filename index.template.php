@@ -7,11 +7,11 @@
 
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=IE8" />
 	<link rel="stylesheet" href="//play.pokemonshowdown.com/style/font-awesome.css" />
-	<link rel="stylesheet" href="theme/panels.css?" />
-	<link rel="stylesheet" href="theme/main.css?" />
+	<link rel="stylesheet" href="/theme/panels.css?" />
+	<link rel="stylesheet" href="/theme/main.css?" />
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<link rel="stylesheet" href="//play.pokemonshowdown.com/style/utilichart.css?" />
-	<link rel="stylesheet" href="theme/pokedex.css?" />
+	<link rel="stylesheet" href="/theme/pokedex.css?" />
 
 	<!-- Workarounds for IE bugs to display trees correctly. -->
 	<!--[if lte IE 6]><style> li.tree { height: 1px; } </style><![endif]-->
@@ -22,7 +22,7 @@
 	<div class="pfx-topbar">
 		<div class="header">
 			<ul class="nav">
-				<li><a class="button nav-first" href="//pokemonshowdown.com/"><img src="images/pokemonshowdownbeta.png" alt="Pok&eacute;mon Showdown! (beta)" /> Home</a></li>
+				<li><a class="button nav-first" href="//pokemonshowdown.com/"><img src="/images/pokemonshowdownbeta.png" alt="Pok&eacute;mon Showdown! (beta)" /> Home</a></li>
 				<li><a class="button cur" href="/">Pok&eacute;dex</a></li>
 				<li><a class="button" href="//replay.pokemonshowdown.com/">Replays</a></li>
 				<li><a class="button" href="//pokemonshowdown.com/ladder/">Ladder</a></li>
@@ -62,10 +62,10 @@
 		</p>
 <?php } ?>
 	</div></div>
-	<script src="js/lib/jquery-1.12.4.min.js"></script>
-	<script src="js/lib/lodash.min.js"></script>
-	<script src="js/lib/backbone-min.js"></script>
-	<script src="js/panels.js?"></script>
+	<script src="/js/lib/jquery-1.12.4.min.js"></script>
+	<script src="/js/lib/lodash.min.js"></script>
+	<script src="/js/lib/backbone-min.js"></script>
+	<script src="/js/panels.js?"></script>
 
 	<script src="//play.pokemonshowdown.com/config/config.js?"></script>
 	<script src="//play.pokemonshowdown.com/js/battledata.js?"></script>
@@ -81,10 +81,10 @@
 	<script src="//play.pokemonshowdown.com/data/aliases.js?"></script>
 	<script src="//play.pokemonshowdown.com/js/battle-dex-search.js?"></script>
 	<script src="//play.pokemonshowdown.com/js/search.js?"></script>
-	<script src="js/pokedex.js?"></script>
-	<script src="js/pokedex-pokemon.js?"></script>
-	<script src="js/pokedex-moves.js?"></script>
-	<script src="js/pokedex-search.js?"></script>
-	<script src="js/router.js?"></script>
+	<script src="/js/pokedex.js?"></script>
+	<script src="/js/pokedex-pokemon.js?"></script>
+	<script src="/js/pokedex-moves.js?"></script>
+	<script src="/js/pokedex-search.js?"></script>
+	<script src="/js/router.js?"></script>
 
 </body></html>
