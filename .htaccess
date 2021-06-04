@@ -17,10 +17,10 @@ deny from all
 RewriteEngine on
 
 RewriteCond %{HTTP:X-Forwarded-Proto} ^http$
-RewriteRule ^(.*)$ https://dex.pokemonshowdown.com/$1 [R=302,NE,L]
+RewriteRule ^(.*)$ https://dex.radicalred.net/$1 [R=302,NE,L]
 
-RewriteCond %{HTTP_HOST} ^www\.dex\.pokemonshowdown\.com$
-RewriteRule ^(.*)$ https://dex.pokemonshowdown.com/$1 [R=301,NE,L]
+RewriteCond %{HTTP_HOST} ^www\.dex\.radicalred\.net$
+RewriteRule ^(.*)$ https://dex.radicalred.net/$1 [R=301,NE,L]
 
 RewriteRule ^pokedex(\/.*)?$ / [R=302,L]
 RewriteRule ^pokemon(\/.*)?$ index.php [L,QSA]
