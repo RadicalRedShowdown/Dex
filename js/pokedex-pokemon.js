@@ -285,7 +285,8 @@ var PokedexPokemonPanel = PokedexResultPanel.extend({
 		for (var i=0, len=moves.length; i<len; i++) {
 			var move = BattleMovedex[moves[i].substr(5)];
 			if (move) {
-				var desc = moves[i].substr(1,3) === '001' ? '&ndash;' : '<small>L</small>'+(parseInt(moves[i].substr(1,3),10)||'?');
+				const level = parseInt(moves[i].substr(1,3));
+				desc = level === 0 ? 'Evo' : level === 1 ? '&ndash;' : '<small>L</small>'+(parseInt(moves[i].substr(1,3),10)||'?');
 				buf += BattleSearch.renderTaggedMoveRow(move, desc);
 			}
 		}
@@ -517,18 +518,22 @@ var PokedexPokemonPanel = PokedexResultPanel.extend({
 					last = moves[i].substr(0,1);
 				}
 				var desc = '';
+				let level;
 				switch (last) {
 				case 'a': // level-up move
 					if (lastChanged) buf += '<li class="resultheader"><h3>Level-up</h3></li>';
-					desc = moves[i].substr(1,3) === '001' ? '&ndash;' : '<small>L</small>'+(Number(moves[i].substr(1,3))||'?');
+					level = parseInt(moves[i].substr(1,3));
+					desc = level === 0 ? 'Evo' : level === 1 ? '&ndash;' : '<small>L</small>'+(level||'?');
 					break;
 				case 'b': // prevo1 level-up move
 					if (lastChanged) buf += '<li class="resultheader"><h3>Level-up from '+BattlePokedex[prevo1].name+'</h3></li>';
-					desc = moves[i].substr(1,3) === '001' ? '&ndash;' : '<small>L</small>'+(Number(moves[i].substr(1,3))||'?');
+					level = parseInt(moves[i].substr(1,3));
+					desc = level === 0 ? 'Evo' : level === 1 ? '&ndash;' : '<small>L</small>'+(level||'?');
 					break;
 				case 'c': // prevo2 level-up move
 					if (lastChanged) buf += '<li class="resultheader"><h3>Level-up from '+BattlePokedex[prevo2].name+'</h3></li>';
-					desc = moves[i].substr(1,3) === '001' ? '&ndash;' : '<small>L</small>'+(Number(moves[i].substr(1,3))||'?');
+					level = parseInt(moves[i].substr(1,3));
+					desc = level === 0 ? 'Evo' : level === 1 ? '&ndash;' : '<small>L</small>'+(level||'?');
 					break;
 				case 'd': // tm/hm
 					if (lastChanged) buf += '<li class="resultheader"><h3>TM/HM</h3></li>';
