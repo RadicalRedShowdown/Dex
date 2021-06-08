@@ -3,7 +3,7 @@
 
 	<meta charset="utf-8" />
 
-	<title>Pok&eacute;dex - Pok&eacute;mon Showdown</title>
+	<title>Radical Red Pok&eacute;dex</title>
 
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=IE8" />
 	<link rel="stylesheet" href="//play.pokemonshowdown.com/style/font-awesome.css" />
