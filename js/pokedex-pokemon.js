@@ -60,6 +60,13 @@ var PokedexPokemonPanel = PokedexResultPanel.extend({
 		buf += '</dd>';
 		buf += '</dl>';
 
+		buf += '<dl class="itementry">';
+		buf += '<dt>Items:</dt> <dd>';
+		buf += '<small>5%: ' + pokemon.items[5] + '</small><br>';
+		buf += '<small>50%: ' + pokemon.items[50] + '</small>';
+		buf += '</dd>';
+		buf += '</dl>';
+
 		buf += '<dl class="abilityentry">';
 		buf += '<dt>Abilities:</dt> <dd class="imgentry">';
 		for (var i in pokemon.abilities) {
