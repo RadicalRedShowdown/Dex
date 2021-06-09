@@ -556,8 +556,8 @@ var PokedexMovePanel = PokedexResultPanel.extend({
 			var desc = '';
 			switch (results[i].charAt(0)) {
 			case 'a': // level-up move
-				const level = Number(results[i].split(' ')[0].slice(1)) || '?';
-				desc = level === 0 ? 'Evo' : level === 1 ? '&ndash;' : '<small>L</small>'+level;
+				const level = Number(results[i].split(' ')[0].slice(1));
+				desc = level === 0 ? 'Evo' : level === 1 ? '&ndash;' : '<small>L</small>'+(level||'?');
 				break;
 			case 'b': // tm/hm
 				const moveType = toID(BattleMovedex[this.id].type);

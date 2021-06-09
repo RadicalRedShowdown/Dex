@@ -293,7 +293,7 @@ var PokedexPokemonPanel = PokedexResultPanel.extend({
 			var move = BattleMovedex[moves[i].substr(5)];
 			if (move) {
 				const level = parseInt(moves[i].substr(1,3));
-				desc = level === 0 ? 'Evo' : level === 1 ? '&ndash;' : '<small>L</small>'+(parseInt(moves[i].substr(1,3),10)||'?');
+				desc = level === 0 ? 'Evo' : level === 1 ? '&ndash;' : '<small>L</small>'+(level||'?');
 				buf += BattleSearch.renderTaggedMoveRow(move, desc);
 			}
 		}
