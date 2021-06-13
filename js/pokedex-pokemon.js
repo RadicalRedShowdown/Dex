@@ -382,6 +382,7 @@ var PokedexPokemonPanel = PokedexResultPanel.extend({
 		var moves = [];
 		var shownMoves = {};
 		for (var moveid in learnset) {
+			var move = BattleMovedex[moveid];
 			var sources = learnset[moveid];
 			if (typeof sources === 'string') sources = [sources];
 			for (var i=0, len=sources.length; i<len; i++) {
@@ -390,10 +391,10 @@ var PokedexPokemonPanel = PokedexResultPanel.extend({
 					if (source.substr(0,2) === '8L') {
 						moves.push('a'+source.substr(2).padStart(3,'0')+' '+moveid);
 						shownMoves[moveid] = (shownMoves[moveid]|2);
-					} else if (source === '8M') {
+					} else if (source === '8M' && !move.noTM) {
 						moves.push('d000 '+moveid);
 						shownMoves[moveid] = (shownMoves[moveid]|1);
-					} else if (source === '8T') {
+					} else if (source === '8T' && !move.noTutor) {
 						moves.push('e000 '+moveid);
 						shownMoves[moveid] = (shownMoves[moveid]|1);
 					} else if (source === '8E') {

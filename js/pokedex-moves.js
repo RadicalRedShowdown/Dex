@@ -449,6 +449,7 @@ var PokedexMovePanel = PokedexResultPanel.extend({
 	},
 	getDistribution: function() {
 		var moveid = this.id;
+		var move = BattleMovedex[moveid];
 		if (this.results) return this.results;
 		var results = [];
 		for (var pokemonid in BattlePokedex) {
@@ -468,10 +469,10 @@ var PokedexMovePanel = PokedexResultPanel.extend({
 				if (source.substr(0,2) === '8L') {
 					results.push('a'+sourcePad(source)+pokemonid);
 					atLeastOne = true;
-				} else if (source === '8M') {
+				} else if (source === '8M' && !move.noTM) {
 					results.push('b000 '+pokemonid);
 					atLeastOne = true;
-				} else if (source === '8T') {
+				} else if (source === '8T' && !move.noTutor) {
 					results.push('c000 '+pokemonid);
 					atLeastOne = true;
 				} else if (source === '8E') {
