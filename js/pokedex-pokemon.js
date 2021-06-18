@@ -394,7 +394,7 @@ var PokedexPokemonPanel = PokedexResultPanel.extend({
 					} else if (source === '8M' && !move.noTM) {
 						moves.push('d000 '+moveid);
 						shownMoves[moveid] = (shownMoves[moveid]|1);
-					} else if (source === '8T' && !move.noTutor) {
+					} else if (source === '8T') {
 						moves.push('e000 '+moveid);
 						shownMoves[moveid] = (shownMoves[moveid]|1);
 					} else if (source === '8E') {
@@ -511,7 +511,7 @@ var PokedexPokemonPanel = PokedexResultPanel.extend({
 			}
 		}
 		for (var moveid in learnset) {
-			if (moveid in shownMoves) continue;
+			if (moveid in shownMoves || move.noTM || move.noTutor) continue;
 			moves.push('j000 '+moveid);
 			shownMoves[moveid] = (shownMoves[moveid]|1);
 		}

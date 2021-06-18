@@ -483,7 +483,7 @@ var PokedexMovePanel = PokedexResultPanel.extend({
 					atLeastOne = 'S';
 				}
 			}
-			if (!atLeastOne) {
+			if (!atLeastOne && !move.noTM && !move.noTutor) {
 				results.push('f000 '+pokemonid);
 			}
 		}
