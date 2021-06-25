@@ -28,6 +28,7 @@ var PokedexItemPanel = PokedexResultPanel.extend({
 	initialize: function(id) {
 		id = toID(id);
 		var item = Dex.items.get(id);
+		this.id = id;
 		this.shortTitle = item.name;
 
 		var buf = '<div class="pfx-body dexentry">';
@@ -56,9 +57,29 @@ var PokedexItemPanel = PokedexResultPanel.extend({
 		}
 		if (rrChanges) buf += '</dl>';
 
+		// pokemon
+		buf += '<h3>Pok&eacute;mon that hold this item in the wild</h3>';
+		buf += '<ul class="utilichart nokbd">';
+		buf += '</ul>';
+
 		buf += '</div>';
 
 		this.html(buf);
+
+		setTimeout(this.renderPokemonList.bind(this));
+	},
+	renderPokemonList: function(list) {
+		var item = Dex.items.get(this.id);
+		var buf = '';
+		for (var pokemonid in BattlePokedex) {
+			var template = BattlePokedex[pokemonid];
+			template.id = pokemonid;
+			if (!template.items || template.isNonstandard && !item.isNonstandard) continue;
+			if (template.items['5'] === item.name || template.items['50'] === item.name) {
+				buf += search.renderPokemonRow(template);
+			}
+		}
+		this.$('.utilichart').html(buf);
 	}
 });
 var PokedexAbilityPanel = PokedexResultPanel.extend({
