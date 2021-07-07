@@ -394,7 +394,7 @@ var PokedexPokemonPanel = PokedexResultPanel.extend({
 					} else if (source === '8M' && !move.noTM) {
 						moves.push('d000 '+moveid);
 						shownMoves[moveid] = (shownMoves[moveid]|1);
-					} else if (source === '8T') {
+					} else if (source === '8T' && !move.noTutor) {
 						moves.push('e000 '+moveid);
 						shownMoves[moveid] = (shownMoves[moveid]|1);
 					} else if (source === '8E') {
