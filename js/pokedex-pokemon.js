@@ -511,6 +511,7 @@ var PokedexPokemonPanel = PokedexResultPanel.extend({
 			}
 		}
 		for (var moveid in learnset) {
+			var move = BattleMovedex[moveid];
 			if (moveid in shownMoves || move.noTM || move.noTutor) continue;
 			moves.push('j000 '+moveid);
 			shownMoves[moveid] = (shownMoves[moveid]|1);
