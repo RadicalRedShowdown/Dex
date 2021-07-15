@@ -127,7 +127,7 @@ var PokedexMovePanel = PokedexResultPanel.extend({
 			buf += '<p class="movetag"><a href="/tags/ballistic" data-target="push">&#x2713; Ballistic</a> <small>(doesn\'t affect <a class="subtle" href="/abilities/bulletproof" data-target="push">Bulletproof</a> pokemon)</small></p>';
 		}
 		if ('kick' in move.flags) {
-			buf += '<p class="movetag"><a href="/tags/kick" data-target="push">&#x2713; Kick</a> <small>(boosted by <a class="subtle" href="/abilities/strikes" data-target="push">Striker</a>)</small></p>';
+			buf += '<p class="movetag"><a href="/tags/kick" data-target="push">&#x2713; Kick</a> <small>(boosted by <a class="subtle" href="/abilities/striker" data-target="push">Striker</a>)</small></p>';
 		}
 		if ('blade' in move.flags) {
 			buf += '<p class="movetag"><a href="/tags/blade" data-target="push">&#x2713; Blade</a> <small>(boosted by <a class="subtle" href="/abilities/blademaster" data-target="push">Blademaster</a>)</small></p>';
